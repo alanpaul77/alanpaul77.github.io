@@ -503,23 +503,126 @@
       color: var(--muted);
     }
 
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10,10,10,0.97);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-mobile a:hover { color: var(--accent); }
+    .nav-mobile-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
+      /* nav */
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
-      section { padding: 4rem 1.5rem; }
-      #hero { padding: 6rem 1.5rem 3rem; }
-      .hero-grid { grid-template-columns: 1fr; }
-      .hero-right { display: flex; justify-content: center; margin-bottom: 2rem; order: -1; }
-      .hero-img-wrap { width: 260px; height: 320px; }
-      .hero-badge { left: auto; right: 0; bottom: 1rem; }
-      .summary-inner { grid-template-columns: 1fr; }
+      .nav-hamburger { display: flex; }
+
+      /* base spacing */
+      section { padding: 3rem 1.25rem; }
+      #summary { padding: 3rem 1.25rem; }
+      #contact { padding: 3rem 1.25rem; }
+      footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+
+      /* hero */
+      #hero { padding: 5rem 1.25rem 3rem; }
+      .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-right { display: flex; justify-content: center; order: -1; }
+      .hero-img-wrap { width: 220px; height: 270px; }
+      .hero-badge { left: auto; right: 0.5rem; bottom: 0.75rem; padding: 0.65rem 1rem; }
+      .hero-badge-num { font-size: 1.4rem; }
+      .hero-name { font-size: 3rem; }
+      .hero-bio { font-size: 0.88rem; }
+      .hero-btns { flex-direction: column; }
+      .btn { text-align: center; }
+
+      /* summary */
+      .summary-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .stats-row { gap: 1.5rem; }
+      .stat-num { font-size: 2rem; }
+
+      /* timeline */
+      .timeline::before { left: 20px; }
+      .tl-num { width: 40px; height: 40px; font-size: 0.75rem; flex-shrink: 0; }
+      .tl-item { gap: 1rem; }
+      .tl-body { padding: 1.25rem; }
+      .tl-role { font-size: 0.95rem; }
+      .tl-desc { font-size: 0.82rem; }
+
+      /* mission/vision */
       .mv-grid { grid-template-columns: 1fr; }
+
+      /* education */
       .edu-grid { grid-template-columns: 1fr; }
-      .skills-grid { grid-template-columns: 1fr 1fr; }
+
+      /* skills */
+      .skills-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+      /* courses */
       .courses-grid { grid-template-columns: 1fr; }
-      .personal-grid { grid-template-columns: 1fr 1fr; }
-      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+
+      /* languages */
+      .lang-grid { flex-direction: column; }
+      .lang-card { min-width: unset; }
+
+      /* personal */
+      .personal-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .personal-card { padding: 1.25rem; }
+
+      /* section titles */
+      .section-title { font-size: 1.8rem; }
+      .contact-title { font-size: 1.5rem; }
+      .contact-links { flex-direction: column; align-items: stretch; }
+      .contact-link { justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .personal-grid { grid-template-columns: 1fr; }
+      .hero-img-wrap { width: 180px; height: 220px; }
+      .tl-meta { flex-direction: column; }
     }
   </style>
 </head>
@@ -535,7 +638,21 @@
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-hamburger" id="menuBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile nav overlay -->
+<div class="nav-mobile" id="mobileMenu">
+  <button class="nav-mobile-close" id="menuClose" aria-label="Close menu">&#215;</button>
+  <a href="#summary" class="mobile-link">About</a>
+  <a href="#experience" class="mobile-link">Experience</a>
+  <a href="#education" class="mobile-link">Education</a>
+  <a href="#skills" class="mobile-link">Skills</a>
+  <a href="#courses" class="mobile-link">Courses</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+</div>
 
 <!-- ── HERO ── -->
 <section id="hero">
@@ -1017,6 +1134,17 @@
   <span>Retail &amp; Business Management Professional</span>
 </footer>
 
-<script>lucide.createIcons();</script>
+<script>
+  lucide.createIcons();
+
+  const menuBtn = document.getElementById('menuBtn');
+  const menuClose = document.getElementById('menuClose');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileLinks = mobileMenu.querySelectorAll('.mobile-link');
+
+  menuBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+  menuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  mobileLinks.forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+</script>
 </body>
 </html>
